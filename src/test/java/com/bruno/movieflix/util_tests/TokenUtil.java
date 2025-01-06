@@ -8,8 +8,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.bruno.movieflix.dto.LoginDTO;
+import com.bruno.movieflix.dto.UserDTO;
+import com.bruno.movieflix.services.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.json.JacksonJsonParser;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -20,6 +23,15 @@ import org.springframework.util.MultiValueMap;
 
 @Component
 public class TokenUtil {
+
+    @Autowired
+    private UserService userService;
+
+    private UserDTO userLogged;
+
+    public UserDTO getUserLogged() {
+        return userLogged;
+    }
 
     public String obtainAccessToken(MockMvc mockMvc, String username, String password) throws Exception {
 

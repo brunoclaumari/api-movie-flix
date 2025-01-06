@@ -105,6 +105,10 @@ public class Movie {
         this.genre = genre;
     }
 
+    public Set<Review> getReviews() {
+        return reviews;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

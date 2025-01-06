@@ -69,6 +69,7 @@ public class SecurityConfigurations {
                             .requestMatchers("/favicon.ico").permitAll()
                             .requestMatchers(HttpMethod.GET,"/users/findAll").hasRole("MEMBER")
                             .requestMatchers(HttpMethod.POST,"/users/register").hasRole("MEMBER")
+                            .requestMatchers(HttpMethod.POST,"/reviews").hasRole("MEMBER")
                             .requestMatchers(HttpMethod.POST,"/users/login").permitAll()
                             //.requestMatchers(HttpMethod.POST,"/movies").hasRole("MEMBER")
                             .anyRequest().authenticated();

@@ -4,6 +4,7 @@ import com.bruno.movieflix.custom_exceptions.MyEmailAlreadyExistsException;
 import com.bruno.movieflix.custom_exceptions.MyForbiddenException;
 import com.bruno.movieflix.custom_exceptions.MyResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
+import org.hibernate.query.sqm.PathElementException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -29,20 +30,6 @@ public class ControllerExceptionHandler {
 
         return ResponseEntity.status(status).body(err);
     }
-
-/*    @ExceptionHandler(MyForbiddenException.class)
-    public ResponseEntity<StandardError> forbidden1(MyForbiddenException e, HttpServletRequest request){
-        HttpStatus status=HttpStatus.FORBIDDEN;//403
-
-        StandardError err = new StandardError();
-        err.setTimestamp(Instant.now());
-        err.setStatus(status.value());
-        err.setError("Acesso Negado!");
-        err.setMessage(e.getMessage());
-        err.setPath(request.getRequestURI());
-
-        return ResponseEntity.status(status).body(err);
-    }*/
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ValidationError> validation(MethodArgumentNotValidException e, HttpServletRequest request){
@@ -76,6 +63,20 @@ public class ControllerExceptionHandler {
         for(FieldMessage f: e.getListErrors()) {
             err.addError(f.getFieldName(), f.getMessage());
         }
+
+        return ResponseEntity.status(status).body(err);
+    }
+
+        @ExceptionHandler(PathElementException.class)
+    public ResponseEntity<StandardError> filterAttributeError(PathElementException e, HttpServletRequest request){
+        HttpStatus status=HttpStatus.BAD_REQUEST;//400
+
+        StandardError err = new StandardError();
+        err.setTimestamp(Instant.now());
+        err.setStatus(status.value());
+        err.setError("Nome no filtro inválido!");
+        err.setMessage(e.getMessage());
+        err.setPath(request.getRequestURI());
 
         return ResponseEntity.status(status).body(err);
     }

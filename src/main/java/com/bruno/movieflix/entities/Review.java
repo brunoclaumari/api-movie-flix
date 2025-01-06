@@ -47,6 +47,23 @@ public class Review {
         this.id = id;
     }
 
+    public void setMovie(Movie movie) {
+        this.movie = movie;
+    }
+
+    public Movie getMovie() {
+        return movie;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
